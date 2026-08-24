@@ -1,0 +1,926 @@
+abdicate,v. 退位、放弃
+abide,v. 遵守、忍受
+abolish,v. 废除、取消
+abound,v. 充满、到处都是
+absolute,adj. 绝对的、专制的
+absorb,v. 吸收、承受
+abstract,adj. 抽象的
+abundantly,adv. 大量地、非常地
+abuse,v./n. 虐待、滥用
+academic,adj. 学术的
+accelerate,v. 加速、促进
+access,v./n. 进入、使用
+acclaim,v./n. 称赞、喝彩
+accommodate,v. 容纳（使）适应
+accompany,v. 陪伴、伴随
+account,v. 占比、解释；n. 账户、资料
+accuracy,n. 精确（性）、准确（性）
+achieve,v. 获得、实现
+acknowledge,v. 承认、认可
+acquire,v. 获得、习得
+activate,v. 刺激、激发
+acute,adj. 严重的、急性的
+adaptable,adj. 适合的、能适应的
+adequate,adj. 充足的、充分的
+adhere,v. 坚持、遵守
+adjoining,adj. 邻接的、相邻的
+adjust,v. 调整、适应
+administration,n. 管理（美国）政府
+admire,v. 钦佩、欣赏
+admit,v. 承认
+adopt,v. 收养、采纳
+adornment,n. 装饰（品）
+advocate,v. 提倡、拥护；n. 支持者、拥护者
+affect,v. 影响、感动；n. 情感
+affiliation,n. 联系、有关联的事物
+affirm,v. 肯定、证实
+agency,n. 代理、机构
+aggravate,v. 加重、恶化
+aggregation,n. 聚合、形成
+aggressive,adj. 激进的、过激的、有进取心的
+agitated,adj. 激动的、焦虑的
+agony,n. 痛苦
+alien,adj. 外国的；n. 外国人
+allay,v. 减轻、使缓和
+allegation,n. 指控、陈述
+alleviate,v. 减轻（使）缓和
+alliance,n. 联合、联盟
+allocation,n. 分配、配置
+alter,v. 改变、更改
+amateur,adj. 业余的；n. 业余爱好者
+amazing,adj. 令人惊讶的
+ambiguous,adj. 模糊不清的，模棱两可的
+ambition,n. 雄心、志向
+amplify,v. 扩大、加强
+analogy,n. 类比
+ancestor,n. 先驱者、祖先
+announce,v. 宣布、声明
+annoy,v./n. 困扰、烦扰
+annual,adj. 年度的、每年的、四季常青的
+anonymity,n. 匿名
+anticipate,v. 预测、预料
+apparent,adj. 明显的
+appeal,v./n. 吸引、请求、上诉
+appease,v. 安抚、抚慰
+apply,v. 运用、适用、申请
+appoint,v. 指定、任命
+appreciate,v. 感激、欣赏、理解
+apprehensive,adj. 忧虑的、不安的
+approach,v. 接近、处理；n. 接近、方法
+appropriate,adj. 适当的、合适的
+arbiter,n. 仲裁者、主宰者
+arouse,v. 引起、激发
+array,v./n. 排列
+artificial,adj. 人造的、人工的
+aspect,n. 方面
+aspire,v. 渴望、追求
+assembly,n. 集合、组装
+assert,v. 宣称、断言
+assess,v. 评估、估算
+asset,n. 资产
+assign,v. 分配、布置
+assimilation,n. 同化
+assist,v. 帮助、协助
+associate,v. 联合、使有联系
+assume,v. 假设
+astrological,adj. 占星的
+astronomy,n. 天文学
+atmosphere,n. 大气（层）、空气、气氛
+attract,v. 吸引
+auction,v./n. 拍卖
+authority,n. 权力、权威、官方
+automated,adj. 自动（化）的
+available,adj. 可得到的、存在的
+awkward,adj. 尴尬的
+bankruptcy,n. 破产
+barely,adv. 仅仅、几乎没有
+barrier,n. 障碍
+behavior,n. 行为、举止
+bellyful,n. 满腹
+benefactor,n. 捐助者
+benign,adj. 良性的、无害的
+betray,v. 背叛、揭露
+bias,n. 偏见
+bid,v./n. 投标、出价
+bilingual,adj. 双语的
+binary,adj. 非黑即白的、二元的
+binding,adj. 有约束力的
+biographical,adj. 传记的
+board,n. 委员会、董事会
+boom,v. 迅速发展；n. 繁荣
+bother,v./n. 操心、麻烦
+boundary,n. 界限、范围
+bribery,n. 行贿、受贿
+brief,adj. 简短的、简洁的；n. 摘要、简报
+broaden,v. 扩大、加宽
+broker,n. 经纪人
+bubble,v. 冒泡；n. 气泡、泡沫
+budget,v./n. 预算
+bureaucratic,adj. 官僚主义的
+burst,v./n. 爆炸、爆发
+campaign,n. 战役、运动、活动
+candidate,n. 候选人
+capable,adj. 有能力的
+capture,v. 捕捉、吸引；n. 俘虏、战利品
+carve,v. 分割、雕刻
+category,n. 种类、范畴
+cater,v. 迎合、为……服务
+caution,v. 警告；n. 小心、谨慎、警告
+cavity,n. 腔，（牙齿的）漏洞
+celebrate,v. 庆祝
+challenge,v./n. 挑战、质疑
+character,n. 特征、性质、性格、字符
+charge,v. 收费、指控；n. 费用、控告
+charity,n. 慈善（机构）
+chronic,adj. 长期的、慢性的
+circuit,v. 环行；n. 环行、电路
+civil,adj. 公民的、文明的
+claim,v./n. 声称、要求、索赔
+clarity,n. 清晰
+client,n. 客户、顾客
+cloak,v. 遮盖、掩饰；n. 斗篷
+clue,n. 提示、线索
+clumsy,adj. 笨拙的、不灵活的
+coalition,n. 联合、联盟
+cognitive,adj. 认知的
+coherent,adj. 连贯的、一致的、粘在一起的
+coincidence,n. 巧合
+collaborative,adj. 合作的、协作的
+collapse,v./n. 倒塌、瓦解
+collect,v. 收集、采集
+combat,adj. 战斗的、斗争的；v. 战斗、斗争
+command,v./n. 命令、控制、掌握
+commemorate,v. 纪念
+commercial,adj. 商业的、商务的
+commit,v. 进行、实施
+commodity,n. 商品
+community,n. 社群，（学术）界
+compact,n. 合同，契约
+compare,v. 比较，相比
+compelling,adj. 强制的，令人信服的
+compensate,v. 补偿，赔偿，弥补，抵消
+competent,adj. 有能力的，能胜任的
+competitive,adj. 竞争的
+compile,v. 汇编；收集
+complex,adj. 复杂的
+complicated,adj. 复杂的
+comply,v. 遵守，遵从
+component,n. 组成部分
+composition,n. （文学，音乐，美术等）作品
+compound,v. 加剧，混合；n. 化合物
+comprehensive,adj. 综合的，全面的
+compromise,v./n. 妥协，破坏
+conceive,v. 怀孕，构想，认为
+concentrate,v. 集中，浓缩，专心
+concept,n. 概念，观念
+concession,n. 妥协，让步
+conclude,v. 结束，推断，做出结论
+concrete,n. 混凝土；adj. 具体的，明确的
+condemn,v. 谴责，责备
+conduct,v. 实施，管理，指挥，引导；n. 行为，品行
+confer,v. 赋予，协商
+confident,adj. 自信的、有信心的
+confine,v. 限制、约束；n. 限制、界限
+confirm,v. 确认、确定
+conflict,v. 与……相冲突；n. 冲突、矛盾
+confront,v. 遭遇、面对
+confuse,v. 迷惑、使困惑
+conjunction,n. 结合、同时发生
+conquer,v. 征服、克服
+conscience,n. 良心、良知
+conscious,adj. 有意识的
+consent,v./n. 赞同、同意
+consequence,n. 后果
+conservative,adj. 保守的；n. 保守派、保守党
+consistent,adj. 一致的、相符的
+consolidation,n. 合并
+constant,adj. 不变的、经常的；n. 常数、不变的事物
+constitute,v. 组成、构成
+constrain,v. 限制、约束
+construction,n. 建立、建造、建筑（物）
+consume,v. 消费、消耗
+contempt,n. 轻蔑、蔑视
+content,adj. 满意的；n. 满意、内容
+contest,v./n. 竞争、争论
+contract,n. 合约、合同
+contradictory,adj. 矛盾的
+contrary,adj./adv. 相反的/地；n. 相反
+contrast,v./n. 对比、对照
+contribute,v. 贡献、导致
+controversial,adj. 有争议的
+conventional,adj. 传统的、常规的
+converge,v. 集中、达成一致
+convert,v. 转变、转化
+convey,v. 运输、表达
+conviction,n. 判决、定罪
+convincing,adj. 有说服力的、令人信服的
+cooperate,v. 配合、合作
+coordination,n. 协调、协作
+core,n. 核心、要点
+corporate,adj. 公司的、企业的
+correct,adj. 正确的
+correlate,v. 使相互关联、和……相关
+correspond,v. 符合、与……一致、与……通信
+corruption,n. 贪污、腐败
+counterbalance,v. 抵消、使平衡；n. 平衡力
+counterpart,n. 极其相似的人或物、对比物
+courageous,adj. 勇敢的、大胆的
+craft,v. 精心制作；n. 手艺、工艺
+crash,v./n. 撞击、坠落、崩溃
+credit,v. 信任、认可；n. 信用、信贷、学分
+creep,v. 爬行、悄然而至
+crisis,n. 危机、关键时刻
+critical,adj. 批判（性）的、关键的、临界的
+crucial,adj. 至关重要的
+cue,n. 线索、提示
+cultivate,v. 种植、培养
+cunning,adj. 巧妙的、可爱的、狡猾的
+curb,v./n. 控制、限制
+cure,v. 治疗、治愈；n. 治疗、疗法
+curiosity,n. 好奇心
+current,adj. 当前的、流行的
+curriculum,n. （学校等的）全部课程
+cursory,adj. 粗略的、草率的、匆忙的
+dampen,v. 使沮丧
+dawn,v. 破晓、出现；n. 黎明、开端
+dearth,n. 缺乏、不足
+debate,v./n. 争论、辩论
+deceptive,adj. 骗人的、虚伪的
+declaration,n. 申明、宣称
+decline,v./n. 下降、衰退
+decoration,n. 装饰（品）
+dedicate,v. 献身、致力于
+deduce,v. 推理、推断
+deem,v. 认为、视作
+defend,v. 保护、为……辩护
+defer,v. 延期、延迟
+deficiency,n. 缺点、缺乏
+define,v. 定义，（使）明确
+deliberate,v. 仔细考虑；adj. 刻意的，故意的
+delicate,adj. 精致的，微妙的
+deliver,v. 发表（演讲/讲话）、递送
+delusion,n. 错觉、妄想
+democratic,adj. 民主的
+demographic,adj. 人口学的；n. 人口统计数据
+dense,adj. 浓密的，稠密的
+deny,v. 拒绝、否认
+depart,v. 离开、出发
+depict,v. 描述、描绘
+depression,n. 沮丧、抑郁。（经济）萧条
+deprive,v. 剥夺、使丧失
+derive,v. 来自、源于
+descend,v. 下降、遗传
+describe,v. 描述、形容
+deserve,v. 值得、应得
+designate,v. 把……命名为；把……定义为
+desire,v. 渴望、想要；n. 欲望、心愿
+desperate,adj. 令人绝望的，不顾一切的
+deteriorate,v. 恶化
+determine,v. 决定、下定决心
+detrimental,adj. 有害的、不利的
+devastating,adj. 毁灭性的、破坏性极强的
+devise,v. 设计、发明
+devoted,adj. 忠实的、忠诚的、热衷于……的
+differentiate,v. 区分、区别
+diffuse,v. 传播、缓解
+disaster,n. 灾难
+discipline,n. 纪律、原则
+disclose,v. 揭露、公开
+disconcerting,adj. 焦虑的、不安的
+discover,v. 发现、发觉
+discrimination,n. 歧视、区别对待
+disgrace,v. 使丢脸、使蒙羞；n. 耻辱、不光彩的事
+disguise,v./n. 掩饰、伪装
+disintegrate,v. 分解、衰退
+dismiss,v. 解散、解雇、排除
+disorder,v. 扰乱、使失调；n. 混乱、病症（心理学）
+display,v./n. 展示、显示、表现
+disposable,adj. 一次性的、可任意处理的
+disproportionately,adv. 不成比例地
+dispute,v./n. 反对、争论
+disruptive,adj. 破坏（性）的、颠覆（性）的
+distort,v. 歪曲、扭曲
+distraction,n. 分心、分神
+distressed,adj. 烦恼的、难过的
+distribute,v. 分发、分配
+district,n. 区域、地区
+disturb,v. 打搅、使混乱
+diverse,adj. 不同的、多样的
+divisive,adj. 分裂的、有分歧的
+domestic,adj. 家庭的、国内的
+dominate,v. 统治、主导
+donate,v. 捐献、捐赠
+doom,n. 厄运、灾难
+dormant,adj. 休眠的、静止的
+dramatic,adj. 戏剧（性）的、剧烈的
+drastic,adj. 激烈的、剧烈的
+dreadful,adj. 可怕的、糟糕的
+drought,n. 干旱、旱灾
+duplication,n. 重复、复制、副本
+durable,adj. 持续的、持久的、耐用的
+dynamic,adj. 动力（学）的、动态的；n. 动力、动态
+economic,adj. 经济（学）的
+effective,adj. 有效的
+efficient,adj. 有效率的
+effort,n. 努力、尝试
+elaborate,v. 精心准备、详细阐述；adj. 精心的、详尽的
+elect,v. 推选、选举
+elegant,adj. 优美的、优雅的
+element,n. 元素、要素、成分
+elevate,v. 提高、提升
+eligible,adj. 合格的、有资格的
+eliminate,v. 消除、排除
+elite,n. 精英
+embarrassing,adj. 令人尴尬的
+embrace,v./n. 拥抱、接受
+emerge,v. 出现、显现
+emigrate,v. 移民（出）、离开
+emission,n. 排放（量）
+emotional,adj. 情绪的、情感的
+emphasize,v. 强调、重视
+empower,v. 授权、允许
+encode,v. 编码
+encounter,v./n. 遭遇、对抗
+endeavor,v./n. 努力、尝试
+endure,v. 忍受、延续
+engage,v. 从事、参与
+enhance,v. 提高、增加、加强
+enlarge,v. 扩大、放大
+enormous,adj. 巨大的
+enrage,v. 激怒
+ensure,v. 确保、保证
+entail,v. 需要
+entertainment,n. 娱乐、消遣
+enthusiasm,n. 热情
+entirely,adv. 完全地、彻底地
+entitle,v. 给……命名、授予……称号、使有权利/资格
+envision,v. 想象、构想
+epidemic,adj. 传染性的、流行的；n. 传染病、流行病、流行、风行
+equality,n. 公平、平等
+equivalent,adj. 等价的、相当于；n. 等价物
+essential,adj. 本质的、必要的；n. 要素、必需品
+establish,v. 创立、建立
+esteem,v./n. 尊敬、尊重
+estimate,v./n. 评估、估价
+ethical,adj. 伦理的、道德的
+evade,v. 使……感到困难、逃避
+evaluate,v. 评价、评估
+evaporate,v. 蒸发、消失
+eventually,adv. 最终、终于
+evidence,n. 证据、证明
+evolve,v. 发展、进化
+exaggerate,v. 夸大、夸张
+excellent,adj. 优秀的、很好的
+exception,n. 例外
+excessive,adj. 过度的、过量的
+exclusive,adj. 排他的、专有的
+executive,adj. 执行的、行政的；n. 执行者、经理
+exert,v. 施加、发挥
+exhaust,v. 排出、耗尽、使精疲力尽
+exhibit,v. 显示、表现出、展览
+expand,v. 扩大、扩展
+expensive,adj. 昂贵的、奢侈的
+expire,v. 到期、终止
+explicit,adj. 清楚的、明确的
+exploit,v. 开发、利用
+explore,v. 探索、探测、探险
+explosion,n. 爆炸、爆发、激增
+export,v./n. 输出、出口
+expose,v. 面临、遭受（使）暴露（使）曝光
+express,v. 表露、表达
+extend,v. 延长、延期
+external,adj. 外部的、表面的
+extinguish,v. 使熄灭、使破灭
+extract,v. 提炼、提取、取出、拔出
+extraordinarily,adv. 极度地
+fabric,n. 织物、结构
+facilitate,v. 促进、有助于
+fade,v. 褪色、变弱、逐渐消失
+faint,adj. 模糊的、微弱的、勉强的
+fake,adj. 假的、伪造的；n. 假货、赝品
+familiar,adj. 熟悉的、常见的
+fantastic,adj. 异想天开的、不切实际的、极好的
+fascinate,v. 入迷、使者迷
+fatal,adj. 致命的、重大的
+favor,v./n. 喜爱、帮助
+feverish,adj. 发烧的、发热的、狂热的
+fiction,n. 小说
+fierce,adj. 凶猛的、激烈的
+figure,v. 计算；n. 数字、图表、人物
+financial,adj. 金融的、财务的
+finite,adj. 有限的
+flaw,n. 缺陷、瑕疵、裂缝
+flexibility,n. 弹性、灵活性
+flourish,v./n. 繁荣、兴旺
+folk,adj. 民间的；n. 人们（多用复数）
+foresee,v. 预见、预知
+foreshadow,v. 预示、是……的预兆
+formal,adj. 正式的、正规的
+foster,v. 促进、助长
+foundation,n. 创立、根据、基础、基金（会）
+fraction,n. （小）部分、少量
+fragile,adj. 脆弱的、易碎的
+frame,n. 框架、体系（人或动物的）躯体
+freeze,v. 冻结
+frugal,adj. 朴素的、节俭的
+frustrate,v. 挫败（使）受挫
+fulfill,v. 完成、实现
+function,v. 运行、起作用；n. 功能
+fund,v. 投资、资助；n. 资金、基金
+fuse,v. 融入、融合
+garment,n. 衣服、服装
+generate,v. 产生、引起
+generous,adj. 慷慨的、大方的、大量的
+genetic,adj. 基因的、遗传的
+genius,n. 天才、天赋
+genuinely,adv. 真诚地、诚实地
+giant,adj. 巨大的
+glamorous,adj. 迷人的、富有魅力的
+gloom,n. 阴暗、忧郁
+glory,n. 荣耀、辉煌
+grant,v. 授予、允许
+grasp,v./n. 抓住、理解
+gratification,n. 喜悦、满足（感）
+gratitude,n. 感激、感谢
+greed,n. 贪婪
+grievance,n. 委屈、不满
+grip,v./n. 抓住、握紧、控制
+guarantee,v./n. 保证、确保
+habitat,n. 栖息地、生长环境
+hasten,v. 加速
+hemisphere,n. 半球
+heritage,n. 遗产、传统
+hierarchical,adj. 分层的、分级的、等级森严的
+hijack,v./n. 劫持、强行控制
+hinder,v. 阻碍、妨碍
+horizon,n. 地平线
+hostile,adj. 敌对的
+humane,adj. 人道的、仁慈的
+humble,adj. 谦逊的、普通的
+hybrid,adj. 混合的；n. 混合物、结合物
+identify,v. 确定、辨认
+ignore,v. 忽视、对……置之不理
+illuminate,v. 阐明、说明
+illusory,adj. 虚假的、虚幻的
+illustrate,v. 阐明、说明
+imitate,v. 模仿
+immediate,adj. 直接的、立即的
+immense,adj. 巨大的、大量的
+immigrate,v. 移民（人）、迁徙
+immune,adj. 免疫的、免除的、不受影响的
+impact,v./n. 影响
+impel,v. 推动、促使
+implement,v. 实施、执行
+implication,n. 含义、暗示
+impose,v. 把……强加于、使承受
+impoverished,adj. 贫困的
+impressive,adj. 令人印象深刻的、很好的
+impulse,n. 冲动、心血来潮
+inability,n. 无能为力
+incentive,adj. 激励的、刺激的；n. 激励、刺激
+incite,v. 鼓动、煽动
+incline,v. 倾斜、倾向于
+include,v. 包含、包括
+incomplete,adj. 不完整的、不充分的
+independent,adj. 独立的、自主的
+indicate,v. 指出、表明、预示
+indifferent,adj. 中立的、冷漠的、漠不关心的
+indispensable,adj. 必不可少的、不可或缺的
+induce,v. 引诱、引起
+indulge,v. 放任、纵容
+inedible,adj. 不能吃的、难吃的
+inevitable,adj. 不可避免的、必然的
+infection,n. 感染（病）、传染（病）
+infer,v. 推测、推断
+inferior,adj. 较差的、逊色的
+inform,adj. （年老）体弱的、意志薄弱的、不坚固的
+inflation,n. 通货膨胀
+influential,adj. 有影响力的；n. 有影响力的人
+infrastructure,n. 基础设施
+infuriating,adj. 令人愤怒的
+infuse,v. 注入、灌输
+ingenuity,n. 创造力、智慧
+inherent,adj. 内在的、与生俱来的
+initial,adj. 最初的、初始的
+inject,v. 注射、注入
+innate,adj. 天生的、与生俱来的
+innocent,adj. 无辜的、无罪的
+innovation,n. 创新、革新
+inquire,v. 调查、询问
+insidious,adj. 潜伏的、不易察觉的
+insightful,adj. 有深刻见解的、富有洞察力的
+insist,v. 坚称、坚决要求
+inspire,v. 激发、使产生灵感
+instinct,n. 本能、直觉
+institution,n. 机构、制度
+instruct,v. 指导、命令
+insure,v. 确保、保障
+intangible,adj. 无形的、触摸不到的
+integrity,n. 完整、诚信、正直
+intellectual,adj. 学术的、知识的；n. 知识分子
+intelligence,n. 智力、智能
+intend,v. 打算、想要
+intense,adj. 紧张的、强烈的
+interact,v. 相互影响、互动
+interpersonal,adj. 人际的、人与人之间的
+interpretation,n. 翻译、解释
+interrupt,v. 中断、打扰
+intervention,n. 干预、介入
+intimate,adj. 亲密的、私密的
+intricate,adj. 错综复杂的
+intrude,v. 侵扰、侵犯
+intuitive,adj. 本能的、直觉的
+invert,v. 使颠覆、使反转
+invest,v. 投资
+investigation,n. 调查、研究
+involve,v. 包括、参与
+ironic,adj. 讽刺的
+isolate,v.（使）孤立，（使）免于
+issue,v. 发布、发行；n. 问题、发行物
+joint,adj. 联合的、共同的
+journal,n. 日报、杂志、期刊
+jury,n. 陪审团、评委会
+justice,n. 法官、公正
+lag,v./n. 落后、滞后
+lame,adj. 瘸的、蹩脚的
+launch,v. 发起、推出（新产品）
+leakage,n. 泄露
+lean,v. 倾斜、倚靠；adj. 瘦的、贫乏的
+legacy,n. 遗产、传统
+legal,adj. 法律的、合法的
+legitimate,adj. 合法的、合理的
+leisure,adj. 空闲的、休闲的；n. 空闲、休闲
+liberal,adj. 自由（主义）的、开明的；n. 自由主义者、自由党
+lineage,n. 血统、谱系
+literate,adj. 有读写能力的、精通的
+lobby,v. 游说；n. 游说团体、大厅
+locate,v. 定位、位于
+lure,v./n. 引诱、诱惑
+luxury,adj. 奢侈的；n. 奢侈（品）
+magnify,v. 放大、扩大
+maintain,v. 保持、坚持认为
+majestic,adj. 宏伟的、壮观的、华丽的
+major,adj. 主要的、重要的
+mandatory,adj. 强制性的、必修的
+manipulate,v. 操作、处理、控制
+manufacture,v. 加工、制造；n. 制造业
+manuscript,adj. 手写的；n. 手稿、原稿
+margin,n. 边缘
+marine,adj. 海洋的
+marvel,v. 对……感到惊讶；n. 令人惊奇的事物
+massive,adj. 大量的、巨大的
+mastery,n. 掌握、精通、优势、统治权
+materialistic,adj. 唯物主义的、物质至上的
+mature,adj. 成熟的
+measure,v. 测量、估量、权衡；n. 措施
+mechanical,adj. 机械的、呆板的
+memorize,v. 记住、记忆
+mental,adj. 精神的、心理的
+merger,n. 合并、兼并
+merit,n. 价值、优点
+minimal,adj. 最小的、最低的
+minister,n. 牧师、大臣、部长
+minority,n. 少数（派）
+misery,n. 不幸、苦难、悲惨的境遇
+mislead,v. 误导
+mobilize,v. 调动、动员
+modest,adj. 谦虚的、适度的
+monarch,n. 君主、最高统治者
+monitor,v. 监控、监测；n. 监视器、显示屏
+monopoly,n. 垄断
+motivate,v. 激发、驱使
+multiply,v. 乘、大大增加
+mutually,adv. 相互地、共同地
+nasty,adj. 肮脏的、令人厌恶的、严重的
+native,adj. 天生的、天然的、本国的、本地的
+negative,adj. 负面的、否定的
+neglect,v. 疏忽、忽视
+negotiate,v. 协商、谈判
+nightmare,n. 恶梦、噩梦
+nonsense,adj. 荒谬的；n. 胡说
+normal,adj. 正常的、标准的
+notably,adv. 明显地、尤其地
+noteworthy,adj. 值得注意的、显著的
+novel,adj. 新的、新颖的；n. 小说
+nurture,v./n. 培养、培育、养育
+object,v. 反对、拒绝；n. 物体、对象、目标
+oblige,v. 强制、强迫
+obscure,adj. 模糊的、不清楚的
+obsess,v. 使着迷
+obstruct,v. 阻碍、妨碍
+occupy,v. 占用、占有、占领
+occur,v. 出现、发生
+odds,n. 几率、胜算
+official,adj. 官方的、正式的；n. 官员
+omission,n. 遗漏
+opponent,adj. 敌对的、对立的；n. 对手、反对者
+oppose,v. 反对
+oppressive,adj. 压迫的、压抑的
+optimistic,adj. 乐观的
+option,n. 选项、期权
+organism,n. 生物体、有机体
+organization,n. 组织、机构
+original,adj. 起初的、原始的
+ornament,n. 装饰（物）
+outlive,v. 比……活得长
+outraged,adj. 愤怒的
+overlook,v./n. 忽略、忽视
+overshadow,v. 给……蒙上阴影、遮盖
+overturn,v./n. 推翻、打翻、翻倒
+overwhelming,adj. 压倒性的、绝大部分的
+panel,n. 专家组、仪表盘
+panic,adj. 恐慌的；n. 恐慌
+paradox,n. 悖论、矛盾
+parallel,adj. 平行的、类似的；n. 平行线、类似的事情
+paralysis,n. 麻痹、瘫痪
+partial,adj. 局部的、偏袒的
+participate,v. 参加、参与
+passionate,adj. 热情的、易怒的
+patent,v. 授予/取得专利；n. 专利
+peak,n. 顶峰
+peer,v. 凝视、盯着；n. 同辈、同行
+penalty,n. 处罚、惩罚
+pension,n. 津贴、退休金
+perceive,v. 感知、察觉
+perish,v. 死亡、消亡
+permanent,adj. 永久的、永恒的
+permissible,adj. 允许的
+perpetuate,v. 持续、使长期存在
+perplexed,adj. 困惑的
+persistent,adj. 坚持的、持续的
+perspective,n. 视角、观点
+pervasive,adj. 普通的、流行的
+pessimistic,adj. 悲观的
+philosophy,n. 哲学
+phony,adj. 假的、虚伪的
+physical,adj. 身体的、生理的、实体的
+plead,v. 请求、恳求
+polarize,v. (使) 两极分化
+ponder,v. 仔细考虑、深思
+popularity,n. 普及、流行
+portray,v. 描述、描绘
+possession,n. 财产、所有物
+potential,adj. 潜在的、可能的；n. 潜能、可能
+precede,v. 在……之前、高于
+precious,adj. 珍贵的、宝贵的
+precisely,adv. 准确地、恰恰是
+predecessor,n. 前任、前辈
+predict,v. 预言、预知
+preference,n. 喜好、偏好
+prejudice,n. 偏见
+preliminary,adj. 初步的、预备的
+premise,n. 前提
+prescribe,v. 开药、开处方
+preserve,v. 保存、保持
+pressure,n. 压力
+prestige,n. 声望、声誉
+presumptively,adv. 假定地、推测地
+prevailing,adj. 流行的、现行的
+prevent,v. 阻止、防止
+previous,adj. 之前的
+primary,adj. 主要的、基本的、初级的
+principle,n. 原理、原则
+prior,adj. 在……之前的、优先的
+private,adj. 私人的、私密的
+privilege,n. 特权
+procedure,n. 程序、步骤
+proceed,v. 接着、继续；n. 收入
+proclaim,v. 宣布、宣告
+productive,adj. 生产的、多产的、有效的
+professional,adj. 专业的、职业的
+proficient,adj. 熟练的、精通的
+profit,v. 获利、受益；n. 利益、利润
+profound,adj. 深刻的、深远的
+progress,v./n. 进步、发展
+prohibition,n. 禁止、禁令
+prominent,adj. 显著的、杰出的
+promising,adj. 有希望的、好的
+promote,v. 促进、推广
+prompt,adj. 迅速的、立即的；v. 促使、引起
+prone,adj. 易于……的、倾向于……的
+pronounced,adj. 明显的、显著的
+proper,adj. 合适的、恰当的
+property,n. 资产、财产
+propose,v. 计划、建议
+prospect,n. 前途、前景
+prosperity,n. 繁荣
+protest,v./n. 抗议
+provide,v. 提供、供应
+provoke,v. 激起、引起
+prudent,adj. 谨慎的
+psychology,n. 心理（学）
+publication,n. 出版（物）
+purchase,v./n. 购买
+pursuit,n. 追求、职业
+radical,adj. 根本的、激进的
+random,adj. 随机的、随便的
+rarely,adv. 很少地、罕有地
+readily,adv. 乐意地
+realm,n. 领域、范围
+reap,v. 收获、收割
+reasonable,adj. 合理的
+recessing,n. 衰退（期）、萧条（期）
+recipient,n. 接受者、获得者
+recitation,n. 背诵、朗诵
+recklessly,adv. 鲁莽地、不计后果地
+recognize,v. 认出、识别
+recommend,v. 推荐、建议
+recovery,n. 恢复、复苏
+recruit,v. 招聘、招募；n. 招聘、新兵、新成员
+rectify,v. 改正、矫正
+reduce,v. 降低、减少
+refer,v. 涉及、提到
+reflect,v. 反射、反映
+reform,v./n. 改革
+refutation,n. 反驳、驳斥
+regime,n. 政权、政治制度
+region,n. 地区、范围
+register,v./n. 登记、注册
+regrettable,adj. 可借的、令人遗憾的
+regulation,n. 管理、法规
+reign,v./n. 统治、支配
+reinforce,v. 强化、加强
+reject,v. 拒绝、排斥
+release,v. 发布、释放
+reliance,n. 信赖、依赖
+relieve,v. 缓解、减轻
+religious,adj. 宗教的、虔诚的
+reluctant,adj. 勉强的、不情愿的
+remark,v. 评论、注意到；n. 言论、评论
+reminder,n. 提醒、暗示
+remote,adj. 遥远的、偏僻的
+renovation,n. 整修、翻新
+represent,v. 代表、表现
+reproducibility,n. 重现性、再生性
+reputation,n. 名声、名誉
+require,v. 需要、要求
+resent,v. 厌恶、对……感到不满
+resident,n. 居民
+resistant,adj. 抵制的、抗拒的
+respect,v. 尊敬、尊重；n. 尊敬、方面
+responsible,adj. 负责的、有责任的
+restore,v. 修复、恢复（使）复原
+resume,v. 恢复、重新开始；n. 简历
+retail,adj. 零售的；v./n. 零售
+retain,v. 保持、保留
+retreat,v. 后退、衰退；n. 后退、衰退
+retrospection,n. 回忆、反思
+reveal,v. 揭露、表明
+revenue,n. 收入、收益
+reverse,v. 颠倒、扭转（使）转变
+review,v./n. 回顾、审核
+revival,n. 复活、复兴、苏醒
+revolutionary,adj. 革命的、革命性的
+righteous,adj. 公正的、正义的
+rigid,adj. 过于严格的、僵化的
+rigorous,adj. 严格的、枯燥的
+ritual,n. 仪式、习惯
+rival,n. 竞争者、对手
+robust,adj. 健壮的、强有力的
+rough,adj. 粗糙的、大致的
+routine,adj. 日常的、常规的；n. 常规、惯例
+satisfy,v. 满足、使满意
+saturate,v. 浸透、使饱和
+scapegoat,n. 替罪羊
+scary,adj. 可怕的
+scorn,v./n. 轻蔑、鄙视
+screen,v. 检查、审查；n. 屏幕
+scrutinize,v. 仔细察看、详细检查
+section,n. 部分、阶层
+secure,adj. 安全的；无忧的；v. 保护、得到
+segment,v. 切分、分割；n. 部分
+selective,adj. 选择的、挑剔的
+senior,adj. 年长的、高级的
+sensitive,adj. 敏感的
+sentiment,n. 感情、情绪
+separate,adj. 单独的、分开的；v. 分开、使分离
+series,n. 系列（节目）、丛书
+severe,adj. 严重的、严峻的、严厉的
+shed,v. 脱落、流出
+shield,v. 遮挡、保护；n. 盾牌
+shift,v./n. 转移、转变
+shrinking,adj. 收缩的、萎缩的；n. 收缩、萎缩
+signature,n. 签名
+significant,adj. 重要的
+skeptical,adj. 怀疑的
+skip,v./n. 跳跃、跳过、跳读
+slacking,adj. 懒惰的
+slim,adj. 苗条的、薄的
+sole,adj. 单独的、唯一的
+sophisticated,adj. 复杂的、精致的
+species,n. 种类、物种
+split,v. 分解、分开、使分离
+sponsor,v. 赞助、发起；n. 赞助商、发起者
+spontaneity,n. 自然流露、即兴发挥
+spread,v./n. 传播、分布
+squeeze,v. 挤压、榨取
+stable,adj. 稳定的、稳固的
+stagnation,n. 停滞
+statement,n. 陈述、报表
+statistical,adj. 统计（学）的
+status,n. 身份、地位、状况
+steep,adj. 陡峭的（上升/下降）急剧的
+steer,v. 驾驶、引导
+stem,v. 起源；n. 茎、干
+stick,v. 刺、粘住；n. 根子、棒子
+straight,adj./adv. 笔直的/地、直接的/地
+strain,v. 拉紧；n. 张力、压力
+strategy,n. 战略、策略
+stress,v. 强调；n. 压力、重点
+strict,adj. 严格的、严谨的
+striking,adj. 惊人的、显著的、突出的
+strive,v. 努力、争取
+subject,v. (使) 遭受；n. 主题、被试（研究对象）
+submit,v. 提交、(使) 服从
+subscribe,v. 签署、赞同、订阅
+subsequent,adj. 随后的、后来的
+subsidize,v. 资助、补贴
+substantial,adj. 大量的、实质的
+substitute,v. 替代；n. 替代（品）
+subtle,adj. 不明显的、不易察觉的
+succeed,v. 成功、继承
+suffer,v. 遭受、经受
+suicide,v. 自杀；n. 自杀（者）
+suitable,adj. 合适的、适当的、恰当的
+summit,n. 顶点、顶峰
+superb,adj. 极好的
+superior,adj. 比……好的、出众的
+supervision,n. 监督、管理
+supplement,v. 补充；n. 补充、增刊
+suppose,v. 假设、猜想
+suppress,v. 镇压、压制、抑制
+surface,v. (使) 出现、浮出水面；n. 表面
+surgery,n. 外科、手术
+survive,v. 幸存、存留
+suspect,v. 怀疑、猜想；n. 嫌疑犯
+suspend,v. 悬挂、暂停
+sustain,v. 保持、维持、支撑
+swamp,v. 淹没，（使）陷入困境；n. 沼泽
+swing,v./n. 摇摆、波动
+switch,v. 转移、转换；n. 开关
+symbolic,adj. 象征的、符号的
+sympathy,n. 同情
+temper,v. 调和、控制；n. 脾气、性情
+temporary,adj. 暂时的、临时的
+tempt,v. 引诱、诱使、吸引
+tendency,n. 趋势、倾向
+terminal,adj. 终点的，（疾病）晚期的；n. 终点、终端（机）
+terrify,v. 恐吓、使害怕
+testify,v. 证实、作证
+thorny,adj. 棘手的、麻烦的
+threaten,v. 威胁
+thrive,v. 繁荣、盛行
+tissue,n. （动植物的）组织
+tolerate,v. 容忍、忍受
+tough,adj. 强硬的、严苛的
+toxic,adj. 有毒的、不良的
+transaction,n. 交易
+transcendence,n. 超越
+transfer,v./n. 传递、转移
+transform,v. 改变、转变
+transition,n. 转型、过渡
+transparency,n. 透明（度）
+transplant,v./n. 移植
+transportation,n. 运输、交通工具
+tremendous,adj. 巨大的
+triumph,v./n. 成功，胜利
+turbulent,adj. 混乱的、湍急的
+ultimate,adj. 最终的、根本的、极限的
+unanimous,adj. 全体同意的、一致通过的
+undermine,v. 破坏
+uniform,adj. 统一的、相同的；n. 制服
+unique,adj. 独特的、唯一的
+unite,v. 联合、团结、统一
+universal,adj. 普通的、通用的
+unsurpassed,adj. 难以超越的、无与伦比的
+upset,v. 打乱、使心烦（生气）
+urban,adj. 城市的
+urge,v. 推动、驱使；n. 欲望、要求
+utility,n. 功用、效用
+vacuum,v.（用真空吸尘器）清扫、吸入；n. 真空
+vague,adj. 模糊的、含糊的
+vain,adj. 自负的
+valid,adj. 有效的，正当的
+vanish,v. 消失
+vanity,n. 虚荣
+various,adj. 各种各样的
+verbal,adj. 口头的、语言的、文字的
+verdict,n. 结论、判决
+verify,v. 证实、核实
+viable,adj. 可行的
+vibrant,adj. 充满活力的
+victory,n. 胜利
+vigorously,adv. 精力充沛地、强烈地
+violate,v. 违反、侵犯
+virtually,adv. 几乎、事实上
+visible,adj. 看得见的、明显的
+vision,n. 视力、憧憬
+visualize,v. 想像（使）形象化
+vital,adj. 至关重要的、生死攸关的
+vivid,adj. 生动的、逼真的
+vocation,n. 职业
+withdraw,v. 撤销、收回
+withstand,v. 承受
+worship,v./n. 敬奉、崇拜
+yield,v. 生产、产生；n. 产量、收益
+zone,n. 地区
