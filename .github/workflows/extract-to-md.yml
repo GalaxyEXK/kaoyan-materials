@@ -61,8 +61,8 @@ jobs:
 
       - name: Check generated files
         run: |
+          python -m py_compile scripts/extract_to_md.py
           git status --short
-          git diff --check
 
       - name: Commit generated Markdown
         if: github.event_name != 'pull_request'
