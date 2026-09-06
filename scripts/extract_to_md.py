@@ -1,27 +1,36 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
-import tempfile
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from urllib.parse import unquote
+import time
+import zipfile
+
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_ROOT = ROOT / "_extracted"
 
-DOCX_PROFILE = "docx-inline-ocr-v1"
-PDF_PROFILE = "pdf-text-only-v1"
+MINERU_PROFILE = "mineru-vlm-v1"
+FALLBACK_DOCX_PROFILE = "fallback-pandoc-v1"
+FALLBACK_PDF_PROFILE = "fallback-pdftotext-v1"
 
 SUPPORTED = {".docx", ".pdf"}
 SKIP_DIRS = {".git", ".github", "_extracted", "__pycache__"}
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)\n]+)\)(?:\{[^}\n]*\})?")
+HTML_IMAGE_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
 FRONT_MATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
-IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp", ".webp"}
+
+API_BASE = "https://mineru.net/api/v4"
+BATCH_SIZE = max(1, min(50, int(os.getenv("MINERU_BATCH_SIZE", "10"))))
+POLL_SECONDS = max(3, int(os.getenv("MINERU_POLL_SECONDS", "10")))
+TIMEOUT_SECONDS = max(60, int(os.getenv("MINERU_TIMEOUT_SECONDS", "3600")))
+MAX_FILES = max(0, int(os.getenv("MINERU_MAX_FILES", "0")))
 
 
 def sha256_file(path: Path) -> str:
@@ -81,6 +90,20 @@ def read_metadata(path: Path) -> dict[str, str]:
     return meta
 
 
+def read_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+
+
+def useful_chars(text: str) -> int:
+    text = FRONT_MATTER_RE.sub("", text, count=1)
+    text = IMAGE_RE.sub("", text)
+    text = HTML_IMAGE_RE.sub("", text)
+    return len(re.sub(r"\s+", "", text))
+
+
 def output_is_current(source: Path, dest: Path, digest: str) -> bool:
     if not dest.exists():
         return False
@@ -89,235 +112,308 @@ def output_is_current(source: Path, dest: Path, digest: str) -> bool:
     if meta.get("source_sha256") != digest:
         return False
 
-    # Existing PDFs are intentionally grandfathered in. This prevents a one-time
-    # migration from reprocessing a large archive of PDFs.
-    if source.suffix.lower() == ".pdf":
+    profile = meta.get("extractor_profile", "")
+    if profile in {MINERU_PROFILE, FALLBACK_DOCX_PROFILE, FALLBACK_PDF_PROFILE}:
         return True
 
-    if meta.get("extractor_profile") != DOCX_PROFILE:
-        return False
+    text = read_text(dest)
 
-    try:
-        body = dest.read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return False
-    return IMAGE_RE.search(body) is None
+    # Existing PDFs with a matching source hash are kept as-is to avoid a costly
+    # one-time cloud migration of the whole PDF archive. New/changed PDFs use MinerU.
+    if source.suffix.lower() == ".pdf":
+        return useful_chars(text) >= 200
+
+    # Existing DOCX outputs are only migrated when they are clearly not GPT-readable:
+    # e.g. they mainly contain unresolved Pandoc image links or almost no text.
+    has_images = IMAGE_RE.search(text) is not None or HTML_IMAGE_RE.search(text) is not None
+    return not has_images and useful_chars(text) >= 120
 
 
-def run(
-    args: list[str],
-    *,
-    cwd: Path | None = None,
-    timeout: int | None = None,
-    env: dict[str, str] | None = None,
-) -> subprocess.CompletedProcess[str]:
+def run(args: list[str], *, timeout: int = 600) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         args,
-        cwd=str(cwd) if cwd else None,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
         timeout=timeout,
-        env=env,
     )
 
 
-def normalize_ocr(text: str) -> str:
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    lines = [line.rstrip() for line in text.splitlines()]
+def strip_local_images(markdown: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        alt = match.group(1).strip()
+        return f"\n> [图像内容已由 MinerU 解析：{alt}]\n" if alt else "\n"
 
-    compact: list[str] = []
-    blank = False
-    for line in lines:
-        if line.strip():
-            compact.append(line.strip())
-            blank = False
-        elif compact and not blank:
-            compact.append("")
-            blank = True
-
-    while compact and not compact[-1]:
-        compact.pop()
-    return "\n".join(compact).strip()
+    markdown = IMAGE_RE.sub(repl, markdown)
+    markdown = HTML_IMAGE_RE.sub("", markdown)
+    return markdown.strip()
 
 
-def tesseract_image(path: Path) -> str:
-    if not shutil.which("tesseract"):
-        return ""
-
-    env = os.environ.copy()
-    env.setdefault("OMP_THREAD_LIMIT", "1")
-
-    attempts = [
-        ["tesseract", str(path), "stdout", "-l", "chi_sim+eng", "--psm", "6"],
-        ["tesseract", str(path), "stdout", "-l", "eng", "--psm", "6"],
-    ]
-    for args in attempts:
-        result = run(args, timeout=120, env=env)
-        if result.returncode == 0:
-            text = normalize_ocr(result.stdout)
-            if text:
-                return text
-    return ""
-
-
-def quote_ocr(text: str, source_label: str) -> str:
-    safe_label = source_label.replace("--", "—")
-    if not text:
-        return (
-            f"<!-- source-image: {safe_label} -->\n\n"
-            "> **图片 OCR：** 未识别到可用文字。\n"
-        )
-
-    quoted = "\n".join("> " + line if line else ">" for line in text.splitlines())
-    return (
-        f"<!-- source-image: {safe_label} -->\n\n"
-        "> **图片 OCR：**\n>\n"
-        f"{quoted}\n"
+def write_output(source: Path, digest: str, profile: str, body: str) -> None:
+    dest = destination_for(source)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    title = f"# {source.name}\n\n"
+    dest.write_text(
+        metadata_block(source, digest, profile) + title + body.strip() + "\n",
+        encoding="utf-8",
     )
 
 
-def resolve_image_target(raw_target: str, base_dirs: list[Path]) -> Path | None:
-    target = raw_target.strip()
-    if target.startswith("<") and target.endswith(">"):
-        target = target[1:-1]
-    target = unquote(target)
-
-    # Pandoc media paths generated by this script do not contain a title suffix.
-    # If a quoted title somehow appears, prefer the path before it.
-    if ' "' in target:
-        target = target.split(' "', 1)[0]
-
-    raw_path = Path(target)
-    if raw_path.suffix.lower() not in IMAGE_EXTENSIONS:
-        return None
-
-    candidates = [raw_path] if raw_path.is_absolute() else [base / raw_path for base in base_dirs]
-    for candidate in candidates:
-        try:
-            candidate = candidate.resolve()
-        except OSError:
-            pass
-        if candidate.exists():
-            return candidate
-
-    return None
-
-
-def inline_docx_ocr(markdown: str, base_dirs: list[Path]) -> tuple[str, int, int]:
-    matches = list(IMAGE_RE.finditer(markdown))
-    if not matches:
-        return markdown, 0, 0
-
-    unique: dict[Path, str] = {}
-    labels: dict[Path, str] = {}
-    unresolved = 0
-
-    for match in matches:
-        raw_target = match.group(2)
-        image_path = resolve_image_target(raw_target, base_dirs)
-        if image_path is None or not image_path.exists():
-            unresolved += 1
-            continue
-        unique.setdefault(image_path, "")
-        labels.setdefault(image_path, raw_target)
-
-    workers = max(1, min(4, os.cpu_count() or 2))
-    if unique:
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = {pool.submit(tesseract_image, path): path for path in unique}
-            for future in as_completed(futures):
-                path = futures[future]
-                try:
-                    unique[path] = future.result()
-                except Exception:
-                    unique[path] = ""
-
-    recognized = sum(1 for text in unique.values() if text)
-
-    def replace(match: re.Match[str]) -> str:
-        raw_target = match.group(2)
-        image_path = resolve_image_target(raw_target, base_dirs)
-        if image_path is None or not image_path.exists():
-            return quote_ocr("", raw_target)
-        return quote_ocr(unique.get(image_path, ""), labels.get(image_path, raw_target))
-
-    return IMAGE_RE.sub(replace, markdown), recognized, unresolved
-
-
-def convert_docx(source: Path, dest: Path, digest: str) -> tuple[int, int]:
+def fallback_docx(source: Path, digest: str) -> str:
     if not shutil.which("pandoc"):
         raise RuntimeError("pandoc is not installed")
 
-    dest.parent.mkdir(parents=True, exist_ok=True)
-
-    with tempfile.TemporaryDirectory(prefix="kaoyan-docx-") as temp_name:
-        temp_dir = Path(temp_name)
-        media_root = temp_dir / "assets"
-
-        result = run(
-            [
-                "pandoc",
-                str(source.resolve()),
-                "-t",
-                "gfm",
-                "--wrap=none",
-                f"--extract-media={media_root}",
-            ],
-            timeout=600,
-        )
-        if result.returncode != 0:
-            raise RuntimeError(
-                "pandoc failed: " + (result.stderr.strip() or f"exit {result.returncode}")
-            )
-
-        markdown, recognized, unresolved = inline_docx_ocr(
-            result.stdout,
-            [ROOT, temp_dir, media_root],
-        )
-
-        # Never leave broken image links in GPT-facing Markdown.
-        markdown = IMAGE_RE.sub(
-            lambda m: quote_ocr("", m.group(2)),
-            markdown,
-        )
-
-    title = f"# {source.name}\n\n"
-    dest.write_text(
-        metadata_block(source, digest, DOCX_PROFILE) + title + markdown.strip() + "\n",
-        encoding="utf-8",
+    result = run(
+        [
+            "pandoc",
+            str(source.resolve()),
+            "-t",
+            "gfm",
+            "--wrap=none",
+        ]
     )
-    return recognized, unresolved
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or f"pandoc exit {result.returncode}")
+
+    body = strip_local_images(result.stdout)
+    if useful_chars(body) < 40:
+        body = (
+            "> ⚠️ MinerU 解析失败，Pandoc 也没有提取到足够正文。"
+            "该文件可能主要由图片组成，建议稍后重新触发 MinerU。\n"
+        )
+    return body
 
 
-def convert_pdf(source: Path, dest: Path, digest: str) -> bool:
+def fallback_pdf(source: Path, digest: str) -> str:
     if not shutil.which("pdftotext"):
         raise RuntimeError("pdftotext is not installed")
 
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    result = run(["pdftotext", "-layout", str(source.resolve()), "-"], timeout=600)
-
-    text = normalize_ocr(result.stdout) if result.returncode == 0 else ""
-    useful_chars = len(re.sub(r"\s+", "", text))
-
-    title = f"# {source.name}\n\n"
-    if useful_chars < 200:
-        body = (
-            "> ⚠️ **扫描型 PDF：轻量模式未自动 OCR。**\n>\n"
-            "> 为避免 GitHub Actions 因逐页 OCR 跑数小时而超时，这类 PDF "
-            "只做标记。需要时可以单独处理该文件。\n"
+    result = run(["pdftotext", "-layout", str(source.resolve()), "-"])
+    text = result.stdout if result.returncode == 0 else ""
+    if useful_chars(text) < 200:
+        return (
+            "> ⚠️ MinerU 解析失败，本地 PDF 文本层也不足。"
+            "这很可能是扫描版 PDF，建议稍后重新触发 MinerU。\n"
         )
-        has_text = False
-    else:
-        body = text.replace("\f", "\n\n---\n\n").strip() + "\n"
-        has_text = True
+    return text.replace("\f", "\n\n---\n\n").strip()
 
-    dest.write_text(
-        metadata_block(source, digest, PDF_PROFILE) + title + body,
-        encoding="utf-8",
+
+def fallback_one(source: Path, digest: str, reason: str) -> None:
+    rel = source.relative_to(ROOT).as_posix()
+    print(f"::warning::MinerU failed for {rel}; using local fallback: {reason}", flush=True)
+    if source.suffix.lower() == ".docx":
+        body = fallback_docx(source, digest)
+        profile = FALLBACK_DOCX_PROFILE
+    else:
+        body = fallback_pdf(source, digest)
+        profile = FALLBACK_PDF_PROFILE
+    write_output(source, digest, profile, body)
+
+
+def data_id_for(source: Path, digest: str) -> str:
+    rel = source.relative_to(ROOT).as_posix()
+    path_hash = hashlib.sha256(rel.encode("utf-8")).hexdigest()[:12]
+    return f"d_{digest[:20]}_{path_hash}"
+
+
+def auth_headers(token: str) -> dict[str, str]:
+    return {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+    }
+
+
+def request_upload_urls(
+    sources: list[Path], digests: dict[Path, str], token: str
+) -> tuple[str, list[str], dict[str, Path]]:
+    entries = []
+    mapping: dict[str, Path] = {}
+
+    for source in sources:
+        data_id = data_id_for(source, digests[source])
+        mapping[data_id] = source
+        entries.append(
+            {
+                "name": source.name,
+                "data_id": data_id,
+                "is_ocr": True,
+            }
+        )
+
+    payload = {
+        "files": entries,
+        "model_version": "vlm",
+        "language": "ch",
+        "enable_formula": True,
+        "enable_table": True,
+    }
+    response = requests.post(
+        f"{API_BASE}/file-urls/batch",
+        headers=auth_headers(token),
+        json=payload,
+        timeout=60,
     )
-    return has_text
+    response.raise_for_status()
+    result = response.json()
+    if result.get("code") != 0:
+        raise RuntimeError(result.get("msg") or "MinerU upload-url request failed")
+
+    data = result.get("data") or {}
+    batch_id = data.get("batch_id")
+    urls = data.get("file_urls") or []
+    if not batch_id or len(urls) != len(sources):
+        raise RuntimeError("MinerU returned an invalid batch_id/file_urls response")
+
+    return batch_id, urls, mapping
+
+
+def upload_sources(sources: list[Path], urls: list[str]) -> None:
+    for source, upload_url in zip(sources, urls):
+        rel = source.relative_to(ROOT).as_posix()
+        print(f"[mineru upload] {rel}", flush=True)
+        with source.open("rb") as f:
+            response = requests.put(upload_url, data=f, timeout=600)
+        if response.status_code not in (200, 201):
+            raise RuntimeError(
+                f"upload failed for {rel}: HTTP {response.status_code}"
+            )
+
+
+def download_full_markdown(zip_url: str) -> str:
+    response = requests.get(zip_url, timeout=300)
+    response.raise_for_status()
+
+    with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+        candidates = [
+            name
+            for name in archive.namelist()
+            if name.lower().endswith("full.md") and not name.endswith("/")
+        ]
+        if not candidates:
+            candidates = [
+                name
+                for name in archive.namelist()
+                if name.lower().endswith(".md") and not name.endswith("/")
+            ]
+        if not candidates:
+            raise RuntimeError("MinerU result ZIP contains no Markdown file")
+
+        chosen = sorted(
+            candidates,
+            key=lambda n: (0 if n.lower().endswith("full.md") else 1, len(n)),
+        )[0]
+        raw = archive.read(chosen)
+
+    text = raw.decode("utf-8", errors="replace")
+    text = strip_local_images(text)
+    if useful_chars(text) < 40:
+        raise RuntimeError("MinerU Markdown result is unexpectedly empty")
+    return text
+
+
+def poll_batch(
+    batch_id: str,
+    mapping: dict[str, Path],
+    digests: dict[Path, str],
+    token: str,
+) -> tuple[set[Path], dict[Path, str]]:
+    deadline = time.monotonic() + TIMEOUT_SECONDS
+    completed: set[Path] = set()
+    failures: dict[Path, str] = {}
+
+    while time.monotonic() < deadline:
+        response = requests.get(
+            f"{API_BASE}/extract-results/batch/{batch_id}",
+            headers=auth_headers(token),
+            timeout=60,
+        )
+        response.raise_for_status()
+        result = response.json()
+        if result.get("code") != 0:
+            raise RuntimeError(result.get("msg") or "MinerU batch status request failed")
+
+        data = result.get("data") or {}
+        items = data.get("extract_result") or []
+
+        states: list[str] = []
+        for item in items:
+            data_id = item.get("data_id")
+            source = mapping.get(data_id)
+
+            if source is None:
+                file_name = item.get("file_name")
+                matches = [p for p in mapping.values() if p.name == file_name]
+                if len(matches) == 1:
+                    source = matches[0]
+            if source is None:
+                continue
+
+            state = str(item.get("state") or "")
+            states.append(state)
+
+            if state == "done" and source not in completed:
+                zip_url = item.get("full_zip_url")
+                if not zip_url:
+                    failures[source] = "done result did not contain full_zip_url"
+                    completed.add(source)
+                    continue
+                try:
+                    markdown = download_full_markdown(zip_url)
+                    write_output(source, digests[source], MINERU_PROFILE, markdown)
+                    print(
+                        f"[mineru done] {source.relative_to(ROOT).as_posix()}",
+                        flush=True,
+                    )
+                except Exception as exc:
+                    failures[source] = str(exc)
+                completed.add(source)
+
+            elif state == "failed" and source not in completed:
+                failures[source] = item.get("err_msg") or "MinerU reported failed"
+                completed.add(source)
+
+        if len(completed) >= len(mapping):
+            return completed, failures
+
+        waiting = len(mapping) - len(completed)
+        summary = ",".join(sorted(set(states))) if states else "waiting-file"
+        print(f"[mineru wait] batch={batch_id} pending={waiting} states={summary}", flush=True)
+        time.sleep(POLL_SECONDS)
+
+    for source in mapping.values():
+        if source not in completed:
+            failures[source] = f"timeout after {TIMEOUT_SECONDS}s"
+    return completed, failures
+
+
+def process_batch(
+    sources: list[Path], digests: dict[Path, str], token: str
+) -> tuple[int, int]:
+    if not sources:
+        return 0, 0
+
+    try:
+        batch_id, urls, mapping = request_upload_urls(sources, digests, token)
+        print(f"[mineru batch] {batch_id} files={len(sources)}", flush=True)
+        upload_sources(sources, urls)
+        _, failures = poll_batch(batch_id, mapping, digests, token)
+    except Exception as exc:
+        failures = {source: str(exc) for source in sources}
+
+    mineru_ok = len(sources) - len(failures)
+    fallback_ok = 0
+
+    for source, reason in failures.items():
+        try:
+            fallback_one(source, digests[source], reason)
+            fallback_ok += 1
+        except Exception as exc:
+            rel = source.relative_to(ROOT).as_posix()
+            print(f"::error::{rel}: MinerU and fallback both failed: {exc}", flush=True)
+
+    return mineru_ok, fallback_ok
 
 
 def source_files() -> list[Path]:
@@ -334,76 +430,94 @@ def source_files() -> list[Path]:
     return sorted(files, key=lambda p: p.as_posix().lower())
 
 
-def validate_gpt_outputs() -> list[str]:
+def validate_outputs() -> list[str]:
     errors: list[str] = []
-    for md in OUT_ROOT.rglob("*.docx.md"):
+    for md in OUT_ROOT.rglob("*.md"):
         meta = read_metadata(md)
-        if meta.get("extractor_profile") != DOCX_PROFILE:
+        profile = meta.get("extractor_profile", "")
+        if profile != MINERU_PROFILE:
             continue
-        text = md.read_text(encoding="utf-8", errors="replace")
+        text = read_text(md)
         match = IMAGE_RE.search(text)
         if match:
-            errors.append(f"{md.relative_to(ROOT)} still contains image reference: {match.group(0)}")
+            errors.append(
+                f"{md.relative_to(ROOT)} contains unresolved image link: {match.group(0)}"
+            )
+        if useful_chars(text) < 40:
+            errors.append(f"{md.relative_to(ROOT)} has too little readable text")
     return errors
 
 
 def main() -> int:
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
 
+    token = os.getenv("MINERU_API_TOKEN", "").strip()
+    if not token:
+        print(
+            "::warning::MINERU_API_TOKEN is missing; pending files will use local fallback.",
+            flush=True,
+        )
+
+    digests: dict[Path, str] = {}
+    pending: list[Path] = []
     scanned = 0
     skipped = 0
-    converted_docx = 0
-    converted_pdf = 0
-    pdf_scan_markers = 0
-    ocr_images = 0
-    warnings: list[str] = []
 
     for source in source_files():
         scanned += 1
-        dest = destination_for(source)
         digest = sha256_file(source)
+        digests[source] = digest
+        dest = destination_for(source)
 
         if output_is_current(source, dest, digest):
             skipped += 1
             continue
 
-        rel = source.relative_to(ROOT).as_posix()
-        print(f"[convert] {rel}", flush=True)
+        pending.append(source)
 
-        try:
-            if source.suffix.lower() == ".docx":
-                recognized, unresolved = convert_docx(source, dest, digest)
-                converted_docx += 1
-                ocr_images += recognized
-                if unresolved:
-                    warnings.append(f"{rel}: {unresolved} image reference(s) could not be resolved")
-            else:
-                has_text = convert_pdf(source, dest, digest)
-                converted_pdf += 1
-                if not has_text:
-                    pdf_scan_markers += 1
-        except Exception as exc:
-            warnings.append(f"{rel}: {exc}")
-            print(f"::warning::{rel}: {exc}", flush=True)
+    if MAX_FILES:
+        pending = pending[:MAX_FILES]
 
-    validation_errors = validate_gpt_outputs()
+    print(
+        f"Plan: sources={scanned}, skipped={skipped}, pending={len(pending)}, "
+        f"mineru={'enabled' if token else 'disabled'}",
+        flush=True,
+    )
+
+    mineru_ok = 0
+    fallback_ok = 0
+    hard_failures = 0
+
+    for start in range(0, len(pending), BATCH_SIZE):
+        batch = pending[start : start + BATCH_SIZE]
+
+        if token:
+            ok, fallback = process_batch(batch, digests, token)
+            mineru_ok += ok
+            fallback_ok += fallback
+            hard_failures += len(batch) - ok - fallback
+        else:
+            for source in batch:
+                try:
+                    fallback_one(source, digests[source], "MINERU_API_TOKEN missing")
+                    fallback_ok += 1
+                except Exception as exc:
+                    hard_failures += 1
+                    rel = source.relative_to(ROOT).as_posix()
+                    print(f"::error::{rel}: fallback failed: {exc}", flush=True)
+
+    validation_errors = validate_outputs()
     for item in validation_errors:
         print(f"::error::{item}", flush=True)
 
     print(
         "\nSummary: "
-        f"sources={scanned}, skipped={skipped}, "
-        f"docx_converted={converted_docx}, pdf_converted={converted_pdf}, "
-        f"ocr_images_with_text={ocr_images}, scan_pdf_markers={pdf_scan_markers}, "
-        f"warnings={len(warnings)}, validation_errors={len(validation_errors)}"
+        f"sources={scanned}, skipped={skipped}, pending_processed={len(pending)}, "
+        f"mineru_ok={mineru_ok}, fallback_ok={fallback_ok}, "
+        f"hard_failures={hard_failures}, validation_errors={len(validation_errors)}"
     )
 
-    if warnings:
-        print("\nWarnings:")
-        for warning in warnings:
-            print(f"- {warning}")
-
-    return 1 if validation_errors else 0
+    return 1 if hard_failures or validation_errors else 0
 
 
 if __name__ == "__main__":
