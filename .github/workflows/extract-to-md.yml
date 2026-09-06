@@ -26,18 +26,18 @@ permissions:
 
 concurrency:
   group: extract-to-md-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 90
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install converters
+      - name: Install lightweight converters
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -45,16 +45,19 @@ jobs:
             poppler-utils \
             tesseract-ocr \
             tesseract-ocr-chi-sim \
-            tesseract-ocr-eng \
-            unzip
+            tesseract-ocr-eng
 
       - name: Convert documents
+        env:
+          PYTHONUNBUFFERED: "1"
+          OMP_THREAD_LIMIT: "1"
         run: |
           python3 scripts/extract_to_md.py
 
       - name: Check generated files
         run: |
           git status --short
+          git diff --check
 
       - name: Commit generated Markdown
         if: github.event_name != 'pull_request'
