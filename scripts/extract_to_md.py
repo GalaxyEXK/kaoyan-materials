@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from html import unescape
 import io
 import json
 import os
@@ -9,12 +10,14 @@ import re
 import shutil
 import subprocess
 import time
+from urllib.parse import quote
 import zipfile
 
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_ROOT = ROOT / "_extracted"
+INDEX_PATH = ROOT / "GPT_INDEX.md"
 
 MINERU_PROFILE = "mineru-vlm-v1"
 FALLBACK_DOCX_PROFILE = "fallback-pandoc-v1"
@@ -25,6 +28,11 @@ SKIP_DIRS = {".git", ".github", "_extracted", "__pycache__"}
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)\n]+)\)(?:\{[^}\n]*\})?")
 HTML_IMAGE_RE = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
 FRONT_MATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+HEADING_RE = re.compile(r"^#{1,6}\s+(.+?)\s*$", re.MULTILINE)
+HTML_TAG_RE = re.compile(r"<[^>]+>")
+MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\([^)]+\)")
+COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
+URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
 
 API_BASE = "https://mineru.net/api/v4"
 BATCH_SIZE = max(1, min(50, int(os.getenv("MINERU_BATCH_SIZE", "10"))))
@@ -430,13 +438,143 @@ def source_files() -> list[Path]:
     return sorted(files, key=lambda p: p.as_posix().lower())
 
 
-def validate_outputs() -> list[str]:
-    errors: list[str] = []
-    for md in OUT_ROOT.rglob("*.md"):
-        meta = read_metadata(md)
-        profile = meta.get("extractor_profile", "")
-        if profile != MINERU_PROFILE:
+def clean_index_text(text: str) -> str:
+    text = unescape(text)
+    text = COMMENT_RE.sub(" ", text)
+    text = URL_RE.sub(" ", text)
+    text = IMAGE_RE.sub(lambda match: f" {match.group(1)} ", text)
+    text = HTML_IMAGE_RE.sub(" ", text)
+    text = MARKDOWN_LINK_RE.sub(lambda match: match.group(1), text)
+    text = HTML_TAG_RE.sub(" ", text)
+    text = re.sub(r"[`*_>#|~-]+", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def index_topics(markdown: Path, source: str) -> str:
+    body = FRONT_MATTER_RE.sub("", read_text(markdown), count=1)
+    source_name = Path(source).name
+    ignored = {source_name.casefold(), Path(source_name).stem.casefold()}
+    headings: list[str] = []
+
+    for match in HEADING_RE.finditer(body):
+        heading = clean_index_text(match.group(1))
+        if not heading or heading.casefold() in ignored or heading in headings:
             continue
+        headings.append(heading[:100])
+        if len(headings) == 4:
+            break
+
+    topics = "；".join(headings)
+    plain = clean_index_text(HEADING_RE.sub(" ", body))
+    if plain:
+        preview = plain[:160].rstrip("，,；;：:。 ")
+        if not topics:
+            topics = preview
+        elif len(topics) < 70 and preview not in topics:
+            topics = f"{topics}；{preview}"
+
+    return topics[:240]
+
+
+def markdown_label(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
+
+
+def write_gpt_index() -> int:
+    entries: list[dict[str, str]] = []
+    profile_counts: dict[str, int] = {}
+
+    for markdown in sorted(OUT_ROOT.rglob("*.md"), key=lambda path: path.as_posix().lower()):
+        meta = read_metadata(markdown)
+        source = meta.get("source", "")
+        if not source:
+            relative = markdown.relative_to(OUT_ROOT).as_posix()
+            source = relative[:-3] if relative.endswith(".md") else relative
+
+        if Path(source).suffix.lower() not in SUPPORTED:
+            continue
+
+        profile = meta.get("extractor_profile", "legacy") or "legacy"
+        profile_counts[profile] = profile_counts.get(profile, 0) + 1
+        relative_output = markdown.relative_to(ROOT).as_posix()
+        entries.append(
+            {
+                "group": Path(source).parts[0] if Path(source).parts else "其他",
+                "source": source,
+                "target": quote(relative_output, safe="/"),
+                "topics": index_topics(markdown, source),
+            }
+        )
+
+    preferred_groups = {
+        "专业课": 0,
+        "数学": 1,
+        "英语": 2,
+        "政治": 3,
+        "408真题": 4,
+        "资料": 5,
+    }
+    entries.sort(
+        key=lambda entry: (
+            preferred_groups.get(entry["group"], 100),
+            entry["group"].casefold(),
+            entry["source"].casefold(),
+        )
+    )
+
+    docx_count = sum(entry["source"].lower().endswith(".docx") for entry in entries)
+    pdf_count = sum(entry["source"].lower().endswith(".pdf") for entry in entries)
+    profile_summary = "，".join(
+        f"{name}: {count}" for name, count in sorted(profile_counts.items())
+    )
+    lines = [
+        "# GPT 笔记索引",
+        "",
+        "> 由 `scripts/extract_to_md.py` 自动生成，请勿手动编辑。",
+        "",
+        "## GPT 读取规则",
+        "",
+        "1. 先根据本索引中的科目、路径和主题定位候选笔记。",
+        "2. 打开链接对应的 `_extracted/**/*.md`，以仓库笔记为首要依据。",
+        "3. 问题跨越多个章节时，同时读取所有相关候选文件，不要只依赖单个命中。",
+        "4. 回答时标明使用的仓库笔记路径；OCR、公式或表格可疑时明确提示需要核对原文件。",
+        "",
+        "## 概览",
+        "",
+        f"- 可读笔记：{len(entries)}",
+        f"- DOCX：{docx_count}",
+        f"- PDF：{pdf_count}",
+        f"- 提取方式：{profile_summary or '无'}",
+        "",
+    ]
+
+    current_group = ""
+    group_counts: dict[str, int] = {}
+    for entry in entries:
+        group_counts[entry["group"]] = group_counts.get(entry["group"], 0) + 1
+
+    for entry in entries:
+        if entry["group"] != current_group:
+            current_group = entry["group"]
+            lines.extend([f"## {current_group}（{group_counts[current_group]}）", ""])
+
+        item = f"- [{markdown_label(entry['source'])}]({entry['target']})"
+        if entry["topics"]:
+            item += f" — {entry['topics']}"
+        lines.append(item)
+
+    INDEX_PATH.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    return len(entries)
+
+
+def validate_outputs(sources: list[Path]) -> list[str]:
+    errors: list[str] = []
+    for source in sources:
+        md = destination_for(source)
+        if not md.is_file():
+            errors.append(f"{source.relative_to(ROOT)} has no Markdown output")
+            continue
+
         text = read_text(md)
         match = IMAGE_RE.search(text)
         if match:
@@ -463,7 +601,8 @@ def main() -> int:
     scanned = 0
     skipped = 0
 
-    for source in source_files():
+    sources = source_files()
+    for source in sources:
         scanned += 1
         digest = sha256_file(source)
         digests[source] = digest
@@ -506,7 +645,8 @@ def main() -> int:
                     rel = source.relative_to(ROOT).as_posix()
                     print(f"::error::{rel}: fallback failed: {exc}", flush=True)
 
-    validation_errors = validate_outputs()
+    index_entries = write_gpt_index()
+    validation_errors = validate_outputs(sources)
     for item in validation_errors:
         print(f"::error::{item}", flush=True)
 
@@ -514,7 +654,8 @@ def main() -> int:
         "\nSummary: "
         f"sources={scanned}, skipped={skipped}, pending_processed={len(pending)}, "
         f"mineru_ok={mineru_ok}, fallback_ok={fallback_ok}, "
-        f"hard_failures={hard_failures}, validation_errors={len(validation_errors)}"
+        f"hard_failures={hard_failures}, validation_errors={len(validation_errors)}, "
+        f"index_entries={index_entries}"
     )
 
     return 1 if hard_failures or validation_errors else 0
