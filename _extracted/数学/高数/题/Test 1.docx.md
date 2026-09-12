@@ -2,7 +2,7 @@
 generated_by: extract_to_md.py
 source: "数学/高数/题/Test 1.docx"
 source_sha256: "555702be0d0d293dab4927535f297bab68660ac86547e5422875aabcbe5f9906"
-extractor_profile: "mineru-vlm-v1"
+extractor_profile: "mineru-vlm-assets-v2"
 ---
 
 # Test 1.docx
@@ -27,7 +27,7 @@ $$
 
 \- 当 $0 < x < \frac{\pi}{2}$ 时， $\sin 2x > 0$ ；
 
-\- 当 $\frac{\pi}{2} < x < \pi$ 时, $\sin 2x < 0$ ;
+\- 当 $\frac{\pi}{2} < x < \pi$ 时， $\sin 2x < 0$ ;
 
 \- 当 $\pi < x < \frac{3\pi}{2}$ 时， $\sin 2x > 0$
 
@@ -90,7 +90,7 @@ $$
 因此：
 
 $$
-\int_ {\pi} ^ {\frac {3 \pi}{2}} e ^ {- x ^ {2}} \sin 2 x d x = - \int_ {\frac {\pi}{2}} ^ {\pi} e ^ {- \left(t + \frac {\pi}{2}\right) ^ {2}} \sin 2 t d t.
+\int_ {\pi} ^ {\frac {3 \pi}{2}} e ^ {- x ^ {2}} \sin 2 x d x = - \int_ {\frac {\pi}{2}} ^ {\pi} e ^ {- (t + \frac {\pi}{2}) ^ {2}} \sin 2 t d t.
 $$
 
 将其代回原积分（将 $t$ 换回 $x$ ）：
@@ -193,7 +193,7 @@ $$
 \sqrt [ n ]{a _ {1} ^ {n} + \dots + a _ {k} ^ {n}} = M \cdot \sqrt [ n ]{\left(\frac {a _ {1}}{M}\right) ^ {n} + \dots + \left(\frac {a _ {k}}{M}\right) ^ {n}}
 $$
 
-对于 $a_{i} < M$ ， $\left(\frac{a_i}{M}\right)^n\to 0$ 。
+对于 $a_{i} < M$ ， $\left(\frac{a_i}{M}\right)^n\to 0$
 
 对于 $a_{i} = M$ ，该项为1。
 
@@ -281,11 +281,11 @@ x = 2: 左右 4 与 4，连续。
 
 所以在 $(0, +\infty)$ 内不可导的点是 $\{0.5, 2\}$ ，共2个点。
 
-## 题 3:
+## 题3:
 
 题目原文
 
-已知函数 $f(x)$ 连续且 $\lim_{x\to 0}\frac{f(x)}{x} = 1$ ， $g(x) = \int_0^1 f(xt)dt$ ，求 $g'(x)$ 并证明 $g'(x)$ 在 $x = 0$ 处连续。
+已知函数 $f(x)$ 连续且 $\lim_{x\to 0}\frac{f(x)}{x} = 1$ ， $g(x) = \int_0^1 f(xt)dt$ ，求 $g^{\prime}(x)$ 并证明 $g^{\prime}(x)$ 在 $x = 0$ 处连续。
 
 ## 步骤1：先处理 $g(x)$ 的表达式（换元法）
 
