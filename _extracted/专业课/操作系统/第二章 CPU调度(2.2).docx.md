@@ -2,7 +2,7 @@
 generated_by: extract_to_md.py
 source: "专业课/操作系统/第二章 CPU调度(2.2).docx"
 source_sha256: "deb87f82858e5d417875ef03bcf115acb0180daa9f6e9fb443b0f062212b68d9"
-extractor_profile: "mineru-vlm-v1"
+extractor_profile: "mineru-vlm-assets-v2"
 ---
 
 # 第二章 CPU调度(2.2).docx
@@ -170,7 +170,7 @@ $$
 \- CPU 服务时间
 
 $$
-\begin{array}{l} \text {https://chatgpt.com / g / g - p - 6a4147b6a8088191bef869eb87bbe5c0 - cao - zuo - xi - tong / c/} \\ \text {6a5b6ae5 - 03a4 - 83e8 - 80e5 - d5d12650f4b7} \end{array}
+\begin{array}{l} \text {https://chatgpt.com / g / g - p - 6a4147b6a8088191bef869eb87bbe5c0 - cao - zuo - xi - tong / c / } \\ \text {6a5b6ae5 - 03a4 - 83e8 - 80e5 - d5d12650f4b7} \end{array}
 $$
 
 ## CPU 调度算法归纳总结：
@@ -476,8 +476,7 @@ PTBR = 80000H
 PTBR $\rightarrow$ 进程A的页表
 </div>
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/804778b3046a5a7a46eff5843c3616d607ba1ef0e929207f5bf39948256eb0a2.jpg)
 
 后来操作系统进行进程切换，改为运行进程B。
 
@@ -487,8 +486,7 @@ PTBR $\rightarrow$ 进程A的页表
 CPU运行的是进程B的代码但地址转换时仍然查询进程A的页表
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/a26c49cc8eb7deddbd01746d38e4d45de1b757d7405f12c62d6b6ba1cab8292c.jpg)
 
 那么进程 B 发出的虚拟地址，就会按照进程 A 的地址映射进行转换，结果会完全错误，甚至访问进程 A 的内存。
 
@@ -501,8 +499,7 @@ PTBR = 进程A页表的地址
 PTBR = 进程B页表的地址
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/150ff7016211ff9d4e373b2c944c86557b538a2855f82f57559dc72743141bf6.jpg)
 
 换句话说：
 
@@ -526,8 +523,7 @@ PTBR = 进程B页表的地址
 进程C的PCB：保存C的页表地址
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/e591bcedd9e60773cbe545802ef56fd90cee8e36c0072cc396b60adf459ecffb.jpg)
 
 当进程B被调度运行时：
 
@@ -539,8 +535,7 @@ PTBR = 进程B页表的地址
 B 的地址空间正式生效
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/a38c761ba95b9066632dfd97db247b0874dbd539b6cfbb7ee38cc9a290ec75a2.jpg)
 
 王道在基本分页地址变换部分也说明，进程未运行时，页表始址等信息保存在PCB中；进程被调度执行时，操作系统再将这些信息装入页表寄存器。 王道2027操作系统\_OCR
 
@@ -552,8 +547,7 @@ https://chatgpt.com/g/g-p-6a4147b6a8088191bef869eb87bbe5c0-cao-zuo-xi-tong/c/6a5
 
 程序运行时，一个进程的虚拟地址空间通常可以粗略理解为：
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/5d9068903f092d0347ab57b496f9e16528644eaef02bad3a790e45c77fb84a04.jpg)
 
 栈主要保存：
 
@@ -682,8 +676,7 @@ push 一个数据后，SP = 996
 BP = 当前栈帧的基准地址
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/60f1b7ff93322c820c81362bf9c13457bc2f2531b4e723f4e48e337422a889e5.jpg)
 
 只要该函数还没有返回，BP一般保持相对稳定。
 
@@ -695,8 +688,7 @@ BP = 当前栈帧的基准地址
 局部变量 c: BP - 4
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/288039369db16c6fc3e5088d24ddb60e8369c0a2a554701837a396fc63b1b59a.jpg)
 
 无论SP如何变化，BP通常不变，所以访问参数和局部变量非常方便。
 
@@ -707,8 +699,7 @@ SP：栈现在长到哪里了
 BP：当前函数的栈帧以哪里为参照
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/d5628d50b25163217c4ea6ce9abee148c26461c59c550d30159463f8bb3038fd.jpg)
 
 https://chatgpt.com/g/g-p-6a4147b6a8088191bef869eb87bbe5c0-cao-zuo-xi-tong/c/6a5e18c3-6a94-83e8-83ca-6a323a441b0b?tab=sources
 
@@ -829,10 +820,15 @@ https://chatgpt.com/g/g-p-6a4147b6a8088191bef869eb87bbe5c0-cao-zuo-xi-tong/c/6a5
 
 ## 题 3:
 
-09. 在支持页式存储管理和多线程技术的系统中, 当一个进程中的线程 $\mathrm{T}_{1}$ 切换到同一个进程中的线程 $\mathrm{T}_{2}$ 执行时, 操作系统需要执行的操作是 ( )。  
-I. 更新程序计数器的值 II. 更新栈基址寄存器的值  
-III. 更新页基址寄存器的值 IV. 更新进程打开文件表  
-A. I、II、III、IV B. II、IV C. I、II D. I、III、IV
+09. 在支持页式存储管理和多线程技术的系统中，当一个进程中的线程 $T_{1}$ 切换到同一个进程中的线程 $T_{2}$ 执行时，操作系统需要执行的操作是（）。
+I. 更新程序计数器的值
+II. 更新栈基址寄存器的值
+III. 更新页基址寄存器的值
+IV. 更新进程打开文件表
+A. I、II、III、IV
+B. II、IV
+C. I、II
+D. I、III、IV
 
 09. C
 
@@ -871,8 +867,7 @@ A. 240ms B. 260ms C. 340ms D. 360ms
 
 由于 $P_{2}$ 比 $P_{1}$ 晚 5ms 到达， $P_{1}$ 先占用 CPU，作业运行的甘特图如下。
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/cf25b24d9d32f4545f4d969613f3928874b1981d060b9a58e380609147a9f1c0.jpg)
 
 ## 规则3：不同设备可以同时工作
 
@@ -896,7 +891,7 @@ A. 240ms B. 260ms C. 340ms D. 360ms
 
 关键是画图
 
-<table><tr><td> $J_3$ </td><td></td><td>I/s</td><td>I/s</td><td colspan="3">3s. CPU 1s</td><td>4</td></tr><tr><td> $J_2$ </td><td>I 2s</td><td>1s</td><td>2s</td><td>0</td><td>1</td><td>3s</td><td>0</td></tr><tr><td> $J_1$ </td><td>I 2s</td><td>CPU</td><td>3s</td><td>2s</td><td>0 2s</td><td></td><td></td></tr></table>
+<table><tr><td> $J_3$ </td><td></td><td>I/s</td><td>I/s</td><td colspan="3">3s. CPU 1s</td><td>4</td></tr><tr><td> $J_2$ </td><td>I 2s</td><td>1s</td><td>2s</td><td>0</td><td>1</td><td>3s</td><td>0</td></tr><tr><td> $J_1$ </td><td>I 2s</td><td>CPU 3s</td><td>2s</td><td>0 2s</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
 
 $$
 9 + 8 = 1 7
@@ -1077,8 +1072,7 @@ $\rightarrow$ 若为 $\theta$ ，触发调度
 取出就绪队列队头进程运行
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/e21a0104904a6f476583e3bc55274f1dd8b69a23805e160cf61e2c0963f0acb2.jpg)
 
 时间片用完后：
 
@@ -1092,8 +1086,7 @@ P1时间片用完后：
 P2 → P3 → P1
 ```
 
-
-
+![](第二章 CPU调度(2.2).docx.assets/b7bc40885409778b6615c65bd0095692bedb77128dc49a2a395c4e2b310ebd53.jpg)
 
 因此Ⅲ需要。
 
@@ -1127,7 +1120,7 @@ https://chatgpt.com/g/g-p-6a12cc2d8d548191860527308d8d6495-shu-ju-jie-gou/c/6a5e
 
 ## 题 10:
 
-42.【2013 统考真题】某系统正在执行三个进程 $\mathrm{P}_{1}, \mathrm{P}_{2}$ 和 $\mathrm{P}_{3}$ ，各进程的计算（CPU）时间和 I/O 时间比例如下表所示。
+42. 【2013 统考真题】某系统正在执行三个进程 $P_{1}$ , $P_{2}$ 和 $P_{3}$ ，各进程的计算（CPU）时间和 I/O 时间比例如下表所示。
 
 <table><tr><td>进程名</td><td>计算时间</td><td>I/O 时间</td></tr><tr><td> $P_{1}$ </td><td>90%</td><td>10%</td></tr><tr><td> $P_{2}$ </td><td>50%</td><td>50%</td></tr><tr><td> $P_{3}$ </td><td>15%</td><td>85%</td></tr></table>
 
