@@ -11,6 +11,7 @@ on:
       - "**/*.pdf"
       - "scripts/extract_to_md.py"
       - "scripts/extract_with_assets.py"
+      - "scripts/run_extract_with_assets.py"
       - ".github/workflows/extract-to-md.yml"
 
   push:
@@ -21,6 +22,7 @@ on:
       - "**/*.pdf"
       - "scripts/extract_to_md.py"
       - "scripts/extract_with_assets.py"
+      - "scripts/run_extract_with_assets.py"
       - ".github/workflows/extract-to-md.yml"
 
 permissions:
@@ -40,7 +42,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -60,7 +62,7 @@ jobs:
           MINERU_TIMEOUT_SECONDS: "3600"
           MINERU_MAX_FILES: "1"
         run: |
-          python3 scripts/extract_with_assets.py
+          python3 scripts/run_extract_with_assets.py
 
       - name: Migrate documents and visual assets in durable batches
         if: github.event_name != 'pull_request'
@@ -79,7 +81,7 @@ jobs:
           # time limit, already migrated batches remain safely stored on main.
           for round in $(seq 1 20); do
             echo "=== extraction round ${round} ==="
-            python3 scripts/extract_with_assets.py
+            python3 scripts/run_extract_with_assets.py
             git add --all _extracted GPT_INDEX.md
 
             if git diff --cached --quiet; then
@@ -93,5 +95,5 @@ jobs:
 
       - name: Check generated files
         run: |
-          python -m py_compile scripts/extract_to_md.py scripts/extract_with_assets.py
+          python -m py_compile scripts/extract_to_md.py scripts/extract_with_assets.py scripts/run_extract_with_assets.py
           git status --short
