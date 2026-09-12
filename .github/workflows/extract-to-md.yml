@@ -10,6 +10,7 @@ on:
       - "**/*.docx"
       - "**/*.pdf"
       - "scripts/extract_to_md.py"
+      - "scripts/extract_with_assets.py"
       - ".github/workflows/extract-to-md.yml"
 
   push:
@@ -19,6 +20,7 @@ on:
       - "**/*.docx"
       - "**/*.pdf"
       - "scripts/extract_to_md.py"
+      - "scripts/extract_with_assets.py"
       - ".github/workflows/extract-to-md.yml"
 
 permissions:
@@ -31,7 +33,7 @@ concurrency:
 jobs:
   extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 360
 
     steps:
       - name: Checkout repository
@@ -49,33 +51,47 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Convert documents
+      - name: Validate one real document on pull requests
+        if: github.event_name == 'pull_request'
+        env:
+          PYTHONUNBUFFERED: "1"
+          MINERU_API_TOKEN: ${{ secrets.MINERU_API_TOKEN }}
+          MINERU_BATCH_SIZE: "1"
+          MINERU_TIMEOUT_SECONDS: "3600"
+          MINERU_MAX_FILES: "1"
+        run: |
+          python3 scripts/extract_with_assets.py
+
+      - name: Migrate documents and visual assets in durable batches
+        if: github.event_name != 'pull_request'
         env:
           PYTHONUNBUFFERED: "1"
           MINERU_API_TOKEN: ${{ secrets.MINERU_API_TOKEN }}
           MINERU_BATCH_SIZE: "10"
           MINERU_TIMEOUT_SECONDS: "3600"
-          MINERU_MAX_FILES: ${{ github.event_name == 'pull_request' && '1' || '0' }}
+          MINERU_MAX_FILES: "25"
         run: |
-          python3 scripts/extract_to_md.py
-
-      - name: Check generated files
-        run: |
-          python -m py_compile scripts/extract_to_md.py
-          git status --short
-
-      - name: Commit generated Markdown
-        if: github.event_name != 'pull_request'
-        run: |
-          git add --all _extracted GPT_INDEX.md
-
-          if git diff --cached --quiet; then
-            echo "No new Markdown files."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git commit -m "Auto extract documents to Markdown"
-          git push
+          # Each round processes at most 25 stale/new files and commits immediately.
+          # This makes the one-time v2 migration resumable: if the job reaches its
+          # time limit, already migrated batches remain safely stored on main.
+          for round in $(seq 1 20); do
+            echo "=== extraction round ${round} ==="
+            python3 scripts/extract_with_assets.py
+            git add --all _extracted GPT_INDEX.md
+
+            if git diff --cached --quiet; then
+              echo "No new Markdown or visual assets; migration is complete."
+              break
+            fi
+
+            git commit -m "Auto extract documents and visual assets (batch ${round})"
+            git push
+          done
+
+      - name: Check generated files
+        run: |
+          python -m py_compile scripts/extract_to_md.py scripts/extract_with_assets.py
+          git status --short
